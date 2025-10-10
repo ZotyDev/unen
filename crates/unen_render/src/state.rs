@@ -10,7 +10,7 @@ pub struct RendererState {
 
 impl RendererState {
     pub fn new(handle: &SendableWindowHandle) -> Self {
-        log::info!("Creating renderer state...");
+        tracing::info!("Creating renderer state...");
 
         let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
             #[cfg(not(target_arch = "wasm32"))]
@@ -88,14 +88,14 @@ impl RendererState {
             desired_maximum_frame_latency: 2,
         };
 
-        log::info!("WGPU initialized successfully");
+        tracing::info!("WGPU initialized successfully");
 
         (device, queue, config)
     }
 
     pub fn resize(&mut self, width: u32, height: u32) {
         if width == 0 || height == 0 {
-            log::warn!("Invalid resize dimensions: {}x{}", width, height);
+            tracing::warn!("Invalid resize dimensions: {width}x{height}");
             return;
         }
 
@@ -104,19 +104,19 @@ impl RendererState {
         self.surface.configure(&self.device, &self.config);
         self.is_configured = true;
 
-        log::info!("Surface resized to {}x{}", width, height);
+        tracing::info!("Surface resized to {width}x{height}");
     }
 
     pub fn render(&mut self) {
         if !self.is_configured {
-            log::trace!("Skipping render - surface not configured yet");
+            tracing::trace!("Skipping render - surface not configured yet");
             return;
         }
 
         let output = match self.surface.get_current_texture() {
             Ok(output) => output,
             Err(e) => {
-                log::warn!("Failed to get current texture: {:?}", e);
+                tracing::warn!("Failed to get current texture: {e:?}");
                 self.surface.configure(&self.device, &self.config);
                 return;
             }

@@ -10,7 +10,7 @@ keywords.workspace = true
 unen_event = { path = "../unen_event" }
 unen_window = { path = "../unen_window" }
 
-log = { workspace = true }
+tracing = { workspace = true }
 
 pollster = { workspace = true }
 

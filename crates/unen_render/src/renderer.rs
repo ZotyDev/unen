@@ -13,7 +13,7 @@ impl EventHandler for RendererEventHandler {
         if let Some(window_event) = event.downcast_ref::<WindowEvent>() {
             match window_event {
                 WindowEvent::Created(handle) => {
-                    log::info!("Window created, initializing renderer...");
+                    tracing::info!("Window created, initializing renderer...");
                     self.state = Some(RendererState::new(handle));
                 }
                 WindowEvent::Resized { width, height } => {
@@ -27,7 +27,7 @@ impl EventHandler for RendererEventHandler {
                     }
                 }
                 WindowEvent::Destroyed => {
-                    log::info!("Window destroyed, cleaning up renderer...");
+                    tracing::info!("Window destroyed, cleaning up renderer...");
                     self.state = None;
                 }
             }
