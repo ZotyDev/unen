@@ -16,7 +16,7 @@ pub struct RunnerData {
 pub struct MininalRunner;
 
 impl MininalRunner {
-    pub fn new() -> Box<dyn Runner> {
+    pub fn new_boxed() -> Box<dyn Runner> {
         Box::new(Self {})
     }
 }

@@ -22,7 +22,7 @@ pub struct App {
 impl Default for App {
     fn default() -> Self {
         Self {
-            runner: MininalRunner::new(),
+            runner: MininalRunner::new_boxed(),
             state: AppState::default(),
             stages: StageContainer::default(),
         }

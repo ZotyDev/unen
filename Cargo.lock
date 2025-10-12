@@ -1805,6 +1805,7 @@ dependencies = [
  "log",
  "tracing",
  "tracing-subscriber",
+ "unen_app",
  "unen_core",
  "unen_event",
 ]

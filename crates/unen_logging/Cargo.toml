@@ -6,10 +6,15 @@ license.workspace = true
 repository.workspace = true
 keywords.workspace = true
 
+[features]
+default = []
+tracing = ["tracing-subscriber"]
+
 [dependencies]
+unen_app = { path = "../unen_app" }
 unen_core = { path = "../unen_core" }
 unen_event = { path = "../unen_event" }
 
 log = { workspace = true }
 tracing = { workspace = true }
-tracing-subscriber = { workspace = true }
+tracing-subscriber = { workspace = true, optional = true }

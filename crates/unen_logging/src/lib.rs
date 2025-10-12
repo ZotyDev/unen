@@ -1,5 +1,7 @@
-mod logger;
+#[cfg(feature = "tracing")]
+mod tracing_logger;
 
 pub mod prelude {
-    pub use crate::logger::LoggerEventHandler;
+    #[cfg(feature = "tracing")]
+    pub use crate::tracing_logger::TracingLogger;
 }

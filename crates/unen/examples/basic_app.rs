@@ -1,5 +1,10 @@
+use unen::prelude::TracingLogger;
 use unen_app::prelude::*;
 
 fn main() {
-    let app = create_app().run();
+    let mut app = create_app();
+
+    app.system(START, TracingLogger);
+
+    app.run();
 }
