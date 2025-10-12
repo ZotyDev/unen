@@ -1,23 +1,60 @@
-pub fn create_app() -> StoppedApp {
-    StoppedApp::default()
+use crate::{
+    runner::{MininalRunner, Runner, RunnerData},
+    stage::StageContainer,
+};
+
+pub fn create_app() -> App {
+    App::default()
 }
 
 #[derive(Debug, Default)]
-pub struct AppState {}
+pub struct AppState {
+    pub running: bool,
+}
 
-#[derive(Debug, Default)]
-pub struct StoppedApp {
+pub struct App {
     state: AppState,
+    runner: Box<dyn Runner>,
+    stages: StageContainer,
 }
 
-impl StoppedApp {
-    /// Starts the application, consumes `self` and returns a [`RunningApp`].
-    pub fn run(self) -> RunningApp {
-        RunningApp::default()
+impl Default for App {
+    fn default() -> Self {
+        Self {
+            runner: MininalRunner::new(),
+            state: AppState::default(),
+            stages: StageContainer::default(),
+        }
     }
 }
 
-#[derive(Debug, Default)]
-pub struct RunningApp {}
+impl App {
+    /// Starts the application, consumes `self`.
+    pub fn run(self) -> Self {
+        let App {
+            state,
+            mut runner,
+            stages,
+        } = self;
 
-impl RunningApp {}
+        let mut data = RunnerData { stages, state };
+
+        data = runner.as_mut().run(data);
+
+        let RunnerData { state, stages } = data;
+
+        Self {
+            state,
+            runner,
+            stages,
+        }
+    }
+
+    pub fn system(&mut self) -> &mut Self {
+        self
+    }
+
+    pub fn stage(&mut self) -> &mut Self {
+        self
+    }
+}
