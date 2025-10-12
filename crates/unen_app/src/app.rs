@@ -1,3 +1,10 @@
+use std::sync::{atomic::AtomicBool, Arc};
+
+use signal_hook::{
+    consts::{SIGINT, SIGTERM},
+    flag,
+};
+
 use crate::{
     runner::{MininalRunner, Runner, RunnerData},
     stage::{Stage, StageContainer},
@@ -9,9 +16,7 @@ pub fn create_app() -> App {
 }
 
 #[derive(Debug, Default)]
-pub struct AppState {
-    pub running: bool,
-}
+pub struct AppState;
 
 pub struct App {
     state: AppState,
@@ -38,11 +43,27 @@ impl App {
             stages,
         } = self;
 
-        let mut data = RunnerData { stages, state };
+        let term = Arc::new(AtomicBool::new(false));
+
+        flag::register(SIGINT, Arc::clone(&term)).expect("Failed to register SIGINT flag.");
+        flag::register(SIGTERM, Arc::clone(&term)).expect("Failed to register SIGTERM flag.");
+
+        let mut data = RunnerData {
+            stages,
+            state,
+            term,
+        };
 
         data = runner.as_mut().run(data);
 
-        let RunnerData { state, stages } = data;
+        // Prints a newline to not mix logs with ctl echo
+        println!();
+
+        let RunnerData {
+            state,
+            stages,
+            term: _,
+        } = data;
 
         Self {
             state,

@@ -16,13 +16,5 @@ unen_winit = { path = "../unen_winit" }
 unen_render = { path = "../unen_render" }
 
 [[example]]
-name = "basic_setup"
-path = "examples/basic_setup.rs"
-
-[[example]]
-name = "window_setup"
-path = "examples/window_setup.rs"
-
-[[example]]
 name = "basic_app"
 path = "examples/basic_app.rs"

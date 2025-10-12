@@ -1,3 +1,12 @@
+use std::{
+    sync::{
+        atomic::{AtomicBool, Ordering},
+        Arc,
+    },
+    thread,
+    time::Duration,
+};
+
 use crate::{
     app::AppState,
     stage::{StageContainer, START, STEP, STOP},
@@ -10,6 +19,7 @@ pub trait Runner: Send + Sync + 'static {
 pub struct RunnerData {
     pub stages: StageContainer,
     pub state: AppState,
+    pub term: Arc<AtomicBool>,
 }
 
 #[derive(Default)]
@@ -26,17 +36,23 @@ impl Runner for MininalRunner {
         let RunnerData {
             mut stages,
             mut state,
+            term,
         } = data;
 
         state = stages.get(START).execute_all(state);
-        state.running = true;
 
-        while state.running {
+        while !term.load(Ordering::Relaxed) {
             state = stages.get(STEP).execute_all(state);
+
+            thread::sleep(Duration::from_millis(1));
         }
 
         state = stages.get(STOP).execute_all(state);
 
-        RunnerData { stages, state }
+        RunnerData {
+            stages,
+            state,
+            term,
+        }
     }
 }

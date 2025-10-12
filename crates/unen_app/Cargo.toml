@@ -8,3 +8,5 @@ keywords.workspace = true
 
 [dependencies]
 tracing = { workspace = true }
+
+signal-hook = { workspace = true }
