@@ -1,6 +1,6 @@
 use crate::{
     app::AppState,
-    stage::{AppStageStart, AppStageStep, AppStageStop, StageContainer},
+    stage::{StageContainer, START, STEP, STOP},
 };
 
 pub trait Runner: Send + Sync + 'static {
@@ -28,14 +28,14 @@ impl Runner for MininalRunner {
             mut state,
         } = data;
 
-        state = stages.get::<AppStageStart>().execute_all(state);
+        state = stages.get(START).execute_all(state);
         state.running = true;
 
         while state.running {
-            state = stages.get::<AppStageStep>().execute_all(state);
+            state = stages.get(STEP).execute_all(state);
         }
 
-        state = stages.get::<AppStageStop>().execute_all(state);
+        state = stages.get(STOP).execute_all(state);
 
         RunnerData { stages, state }
     }

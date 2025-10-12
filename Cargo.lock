@@ -1768,6 +1768,9 @@ dependencies = [
 [[package]]
 name = "unen_app"
 version = "0.0.1"
+dependencies = [
+ "tracing",
+]
 
 [[package]]
 name = "unen_core"

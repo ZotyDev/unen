@@ -1,6 +1,9 @@
 use crate::app::AppState;
 
 pub trait System: Send + Sync + 'static {
+    fn name(&self) -> &'static str {
+        std::any::type_name::<Self>()
+    }
     fn execute(&mut self, state: AppState) -> AppState;
 }
 

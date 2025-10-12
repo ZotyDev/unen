@@ -1,6 +1,7 @@
 use crate::{
     runner::{MininalRunner, Runner, RunnerData},
-    stage::StageContainer,
+    stage::{Stage, StageContainer},
+    system::System,
 };
 
 pub fn create_app() -> App {
@@ -50,11 +51,18 @@ impl App {
         }
     }
 
-    pub fn system(&mut self) -> &mut Self {
+    pub fn system<S: Stage, M: System>(&mut self, stage: S, system: M) -> &mut Self {
+        let system_name = system.name();
+        let stage_name = stage.name();
+        self.stages.get(stage).push(system);
+        tracing::info!("Attached {} system to {} stage.", system_name, stage_name);
         self
     }
 
-    pub fn stage(&mut self) -> &mut Self {
+    pub fn stage<S: Stage>(&mut self, stage: S) -> &mut Self {
+        let stage_name = stage.name();
+        self.stages.insert(stage);
+        tracing::info!("Inserted '{}' stage.", stage_name);
         self
     }
 }
