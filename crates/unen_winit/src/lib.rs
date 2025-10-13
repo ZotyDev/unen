@@ -1,5 +1,6 @@
-mod winit_runner;
+mod runner;
+mod state;
 
 pub mod prelude {
-    pub use crate::winit_runner::WinitRunner;
+    pub use crate::runner::WinitRunner;
 }

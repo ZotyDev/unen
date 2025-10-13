@@ -3,13 +3,12 @@ members = [
   "crates/unen_net",
   "crates/unen_event",
   "crates/unen_event_derive",
-  "crates/unen_core",
   "crates/unen_logging",
-  "crates/unen_runner",
   "crates/unen_window",
   "crates/unen_winit",
   "crates/unen_render",
   "crates/unen",
+  "crates/unen_app",
 ]
 resolver = "2"
 
@@ -25,16 +24,16 @@ strip = true
 
 [workspace.dependencies]
 # Logging
-log = { version = "0.4.28"}
+log = { version = "0.4.28" }
 tracing = { version = "0.1.41", features = ["log"] }
-tracing-subscriber ={ version = "0.3.20" }
+tracing-subscriber = { version = "0.3.20" }
 
 # Error Handling
-thiserror ={ version = "2.0.17" }
+thiserror = { version = "2.0.17" }
 
 # Derive Macros
 syn = { version = "2.0.106", features = ["full"] }
-quote = { version = "1.0.41"}
+quote = { version = "1.0.41" }
 proc-macro2 = { version = "1.0.101" }
 
 # Algorithm
@@ -48,7 +47,7 @@ pollster = { version = "0.4.0" }
 # Rendering
 winit = { version = "0.30.12", features = ["android-native-activity"] }
 wgpu = { version = "27.0.1", features = ["webgl"] }
-raw-window-handle = { version = "0.6.2"}
+raw-window-handle = { version = "0.6.2" }
 
 # Web
 console_error_panic_hook = { version = "0.1.7" }

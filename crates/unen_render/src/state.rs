@@ -6,6 +6,8 @@ pub struct RendererState {
     queue: wgpu::Queue,
     config: wgpu::SurfaceConfiguration,
     is_configured: bool,
+
+    pub clear_color: wgpu::Color,
 }
 
 impl RendererState {
@@ -31,12 +33,20 @@ impl RendererState {
         let (device, queue, config) =
             pollster::block_on(async { Self::initialize_wgpu(&instance, &surface).await });
 
+        let clear_color = wgpu::Color {
+            r: 0.1,
+            g: 0.2,
+            b: 0.3,
+            a: 1.0,
+        };
+
         Self {
             surface,
             device,
             queue,
             config,
             is_configured: false,
+            clear_color,
         }
     }
 
@@ -139,12 +149,7 @@ impl RendererState {
                     view: &view,
                     resolve_target: None,
                     ops: wgpu::Operations {
-                        load: wgpu::LoadOp::Clear(wgpu::Color {
-                            r: 0.1,
-                            g: 0.2,
-                            b: 0.3,
-                            a: 1.0,
-                        }),
+                        load: wgpu::LoadOp::Clear(self.clear_color),
                         store: wgpu::StoreOp::Store,
                     },
                     depth_slice: None,

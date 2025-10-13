@@ -1,15 +1,19 @@
 [package]
 name = "unen_logging"
+description = "Logging crate for UnnamedEngine"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
 keywords.workspace = true
 
+[features]
+default = []
+tracing = ["tracing-subscriber"]
+
 [dependencies]
-unen_core = { path = "../unen_core" }
-unen_event = { path = "../unen_event" }
+unen_app = { path = "../unen_app" }
 
 log = { workspace = true }
 tracing = { workspace = true }
-tracing-subscriber = { workspace = true }
+tracing-subscriber = { workspace = true, optional = true }

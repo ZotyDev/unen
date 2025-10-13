@@ -1,5 +1,6 @@
 [package]
 name = "unen_render"
+description = "Rendering crate for UnnamedEngine"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -7,6 +8,7 @@ repository.workspace = true
 keywords.workspace = true
 
 [dependencies]
+unen_app = { path = "../unen_app" }
 unen_event = { path = "../unen_event" }
 unen_window = { path = "../unen_window" }
 

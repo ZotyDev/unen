@@ -1,5 +1,6 @@
 [package]
-name = "unen_runner"
+name = "unen_app"
+description = "Application crate for UnnamedEngine"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -7,6 +8,6 @@ repository.workspace = true
 keywords.workspace = true
 
 [dependencies]
-unen_event = { path = "../unen_event", features = ["derive"] }
+tracing = { workspace = true }
 
 signal-hook = { workspace = true }

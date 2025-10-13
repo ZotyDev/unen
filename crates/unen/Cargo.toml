@@ -7,17 +7,16 @@ repository.workspace = true
 keywords.workspace = true
 
 [dependencies]
-unen_core = { path = "../unen_core"}
+unen_app = { path = "../unen_app" }
 unen_event = { path = "../unen_event", features = ["derive"] }
-unen_logging = { path = "../unen_logging" }
-unen_runner = { path = "../unen_runner" }
+unen_logging = { path = "../unen_logging", features = ["tracing"] }
 unen_winit = { path = "../unen_winit" }
-unen_render = { path = "../unen_render"}
+unen_render = { path = "../unen_render" }
 
 [[example]]
-name = "basic_setup"
-path = "examples/basic_setup.rs"
+name = "basic_app"
+path = "examples/basic_app.rs"
 
 [[example]]
-name = "window_setup"
-path = "examples/window_setup.rs"
+name = "window_app"
+path = "examples/window_app.rs"
