@@ -174,9 +174,9 @@ impl ApplicationHandler<WinitState> for WinitRunner {
 
         match event {
             winit::event::WindowEvent::CloseRequested => {
-                state = stages.get(STOP).execute_all(state, &mut commands);
-
                 commands.add(commands::Stop);
+                state = stages.get(STEP).execute_all(state, &mut commands);
+                state = stages.get(STOP).execute_all(state, &mut commands);
 
                 term.store(true, Ordering::Relaxed);
                 event_loop.exit();
@@ -201,9 +201,9 @@ impl ApplicationHandler<WinitState> for WinitRunner {
                 ..
             } => {
                 if let (KeyCode::Escape, true) = (code, key_state.is_pressed()) {
-                    state = stages.get(STOP).execute_all(state, &mut commands);
-
                     commands.add(commands::Stop);
+                    state = stages.get(STEP).execute_all(state, &mut commands);
+                    state = stages.get(STOP).execute_all(state, &mut commands);
 
                     term.store(true, Ordering::Relaxed);
                     event_loop.exit();

@@ -64,6 +64,28 @@ pub mod commands {
             }
         }
     }
+
+    pub struct SetClearColor {
+        pub r: f64,
+        pub g: f64,
+        pub b: f64,
+        pub a: f64,
+    }
+
+    impl Command for SetClearColor {
+        type Target = Renderer;
+
+        fn apply(self: Box<Self>, target: &mut Self::Target) {
+            if let Some(state) = &mut target.state {
+                state.clear_color = wgpu::Color {
+                    r: self.r,
+                    g: self.g,
+                    b: self.b,
+                    a: self.a,
+                }
+            }
+        }
+    }
 }
 
 impl System for Renderer {
