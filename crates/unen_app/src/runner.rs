@@ -7,6 +7,11 @@ use std::{
     time::Duration,
 };
 
+use signal_hook::{
+    consts::{SIGINT, SIGTERM},
+    flag,
+};
+
 use crate::{
     app::AppState,
     stage::{StageContainer, START, STEP, STOP},
@@ -40,6 +45,9 @@ impl Runner for MininalRunner {
         } = data;
 
         state = stages.get(START).execute_all(state);
+
+        flag::register(SIGINT, Arc::clone(&term)).expect("Failed to register SIGINT flag.");
+        flag::register(SIGTERM, Arc::clone(&term)).expect("Failed to register SIGTERM flag.");
 
         while !term.load(Ordering::Relaxed) {
             state = stages.get(STEP).execute_all(state);

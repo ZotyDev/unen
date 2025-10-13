@@ -1,10 +1,5 @@
 use std::sync::{atomic::AtomicBool, Arc};
 
-use signal_hook::{
-    consts::{SIGINT, SIGTERM},
-    flag,
-};
-
 use crate::{
     runner::{MininalRunner, Runner, RunnerData},
     stage::{Stage, StageContainer},
@@ -28,7 +23,7 @@ impl Default for App {
     fn default() -> Self {
         Self {
             runner: MininalRunner::new_boxed(),
-            state: AppState::default(),
+            state: AppState,
             stages: StageContainer::default(),
         }
     }
@@ -45,9 +40,6 @@ impl App {
 
         let term = Arc::new(AtomicBool::new(false));
 
-        flag::register(SIGINT, Arc::clone(&term)).expect("Failed to register SIGINT flag.");
-        flag::register(SIGTERM, Arc::clone(&term)).expect("Failed to register SIGTERM flag.");
-
         let mut data = RunnerData {
             stages,
             state,
@@ -58,6 +50,9 @@ impl App {
 
         // Prints a newline to not mix logs with ctl echo
         println!();
+
+        tracing::info!("Successfully terminated engine.");
+        tracing::info!("See you later :D");
 
         let RunnerData {
             state,
@@ -84,6 +79,11 @@ impl App {
         let stage_name = stage.name();
         self.stages.insert(stage);
         tracing::info!("Inserted '{}' stage.", stage_name);
+        self
+    }
+
+    pub fn runner<R: Runner>(&mut self, runner: R) -> &mut Self {
+        self.runner = Box::new(runner);
         self
     }
 }

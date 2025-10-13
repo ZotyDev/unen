@@ -18,3 +18,7 @@ unen_render = { path = "../unen_render" }
 [[example]]
 name = "basic_app"
 path = "examples/basic_app.rs"
+
+[[example]]
+name = "window_app"
+path = "examples/window_app.rs"
