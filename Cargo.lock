@@ -1754,28 +1754,18 @@ checksum = "d2df906b07856748fa3f6e0ad0cbaa047052d4a7dd609e231c4f72cee8c36f31"
 
 [[package]]
 name = "unen"
-version = "0.0.2"
+version = "0.0.3"
 dependencies = [
- "unen_app 0.0.1",
- "unen_event 0.0.1",
- "unen_logging 0.0.1",
- "unen_render 0.0.1",
- "unen_winit 0.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "unen_app",
+ "unen_event",
+ "unen_logging",
+ "unen_render",
+ "unen_winit",
 ]
 
 [[package]]
 name = "unen_app"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "adc12db67d58fb79924ae10be4f6ff40afc0d072a5c34d194b6f1053b9d84f98"
-dependencies = [
- "signal-hook",
- "tracing",
-]
-
-[[package]]
-name = "unen_app"
-version = "0.0.2"
+version = "0.0.3"
 dependencies = [
  "signal-hook",
  "tracing",
@@ -1783,34 +1773,14 @@ dependencies = [
 
 [[package]]
 name = "unen_event"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "35240181dd15a06604051fa8d154ff22158e13a152d67dade0e00e7c124453e5"
+version = "0.0.3"
 dependencies = [
- "unen_event_derive 0.0.1",
-]
-
-[[package]]
-name = "unen_event"
-version = "0.0.2"
-dependencies = [
- "unen_event_derive 0.0.1",
+ "unen_event_derive",
 ]
 
 [[package]]
 name = "unen_event_derive"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a130029fe1020e4d1e9f8f3b4ec07f7b5b1f2022594c8d84dbf8d1cc7289ffbb"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
-name = "unen_event_derive"
-version = "0.0.2"
+version = "0.0.3"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1819,29 +1789,17 @@ dependencies = [
 
 [[package]]
 name = "unen_logging"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "281cf6809ccd41cc9d8ebc0d88d62d2aae24798d72b778dbd1da4ba41426c064"
+version = "0.0.3"
 dependencies = [
  "log",
  "tracing",
  "tracing-subscriber",
- "unen_app 0.0.1",
-]
-
-[[package]]
-name = "unen_logging"
-version = "0.0.2"
-dependencies = [
- "log",
- "tracing",
- "tracing-subscriber",
- "unen_app 0.0.1",
+ "unen_app",
 ]
 
 [[package]]
 name = "unen_net"
-version = "0.0.2"
+version = "0.0.3"
 dependencies = [
  "bincode",
  "crc32fast",
@@ -1850,88 +1808,40 @@ dependencies = [
 
 [[package]]
 name = "unen_render"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "46ae1d733819c4358c707967371a130e0ee424e6afe8048f6026946639c7df9e"
+version = "0.0.3"
 dependencies = [
  "pollster",
  "raw-window-handle",
  "tracing",
- "unen_app 0.0.1",
- "unen_event 0.0.1",
- "unen_window 0.0.1",
- "wgpu",
-]
-
-[[package]]
-name = "unen_render"
-version = "0.0.2"
-dependencies = [
- "pollster",
- "raw-window-handle",
- "tracing",
- "unen_app 0.0.1",
- "unen_event 0.0.1",
- "unen_window 0.0.1",
+ "unen_app",
+ "unen_event",
+ "unen_window",
  "wgpu",
 ]
 
 [[package]]
 name = "unen_window"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "02fbbdd1b1e25c9e558cf1bb0cbdcee165a47f2db4978ba91755515996d53035"
+version = "0.0.3"
 dependencies = [
  "log",
  "raw-window-handle",
- "unen_event 0.0.1",
- "wgpu",
-]
-
-[[package]]
-name = "unen_window"
-version = "0.0.2"
-dependencies = [
- "log",
- "raw-window-handle",
- "unen_event 0.0.1",
+ "unen_event",
  "wgpu",
 ]
 
 [[package]]
 name = "unen_winit"
-version = "0.0.2"
+version = "0.0.3"
 dependencies = [
  "console_error_panic_hook",
  "console_log",
  "pollster",
  "raw-window-handle",
  "tracing",
- "unen_app 0.0.1",
- "unen_logging 0.0.1",
- "unen_render 0.0.1",
- "unen_window 0.0.1",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "web-sys",
- "winit",
-]
-
-[[package]]
-name = "unen_winit"
-version = "0.0.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "95c5b9c1011fd0f97244791e4a82ab29c861cb40eea8af63f903f61fdd844a3d"
-dependencies = [
- "console_error_panic_hook",
- "console_log",
- "pollster",
- "raw-window-handle",
- "tracing",
- "unen_app 0.0.1",
- "unen_logging 0.0.1",
- "unen_render 0.0.1",
- "unen_window 0.0.1",
+ "unen_app",
+ "unen_logging",
+ "unen_render",
+ "unen_window",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",

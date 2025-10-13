@@ -13,7 +13,7 @@ members = [
 resolver = "2"
 
 [workspace.package]
-version = "0.0.2"
+version = "0.0.3"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/UnnamedEngine/unen"
@@ -23,15 +23,15 @@ keywords = ["unen"]
 strip = true
 
 [workspace.dependencies]
-unen = { version = "0.0.1" }
-unen_app = { version = "0.0.1" }
-unen_event = { version = "0.0.1" }
-unen_event_derive = { version = "0.0.1" }
-unen_logging = { version = "0.0.1" }
-unen_net = { version = "0.0.1" }
-unen_render = { version = "0.0.1" }
-unen_window = { version = "0.0.1" }
-unen_winit = { version = "0.0.2" }
+unen = { path = "./crates/unen", version = "0.0.3" }
+unen_app = { path = "./crates/unen_app", version = "0.0.3" }
+unen_event = { path = "./crates/unen_event", version = "0.0.3" }
+unen_event_derive = { path = "./crates/unen_event_derive", version = "0.0.3" }
+unen_logging = { path = "./crates/unen_logging", version = "0.0.3" }
+unen_net = { path = "./crates/unen_net", version = "0.0.3" }
+unen_render = { path = "./crates/unen_render", version = "0.0.3" }
+unen_window = { path = "./crates/unen_window", version = "0.0.3" }
+unen_winit = { path = "./crates/unen_winit", version = "0.0.3" }
 
 # Logging
 log = { version = "0.4.28" }
