@@ -1,5 +1,6 @@
 [package]
 name = "unen_logging"
+description = "Logging crate for UnnamedEngine"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
