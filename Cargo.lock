@@ -1757,11 +1757,9 @@ name = "unen"
 version = "0.0.1"
 dependencies = [
  "unen_app",
- "unen_core",
  "unen_event",
  "unen_logging",
  "unen_render",
- "unen_runner",
  "unen_winit",
 ]
 
@@ -1771,16 +1769,6 @@ version = "0.0.1"
 dependencies = [
  "signal-hook",
  "tracing",
-]
-
-[[package]]
-name = "unen_core"
-version = "0.0.1"
-dependencies = [
- "log",
- "tracing",
- "unen_event",
- "unen_runner",
 ]
 
 [[package]]
@@ -1807,8 +1795,6 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "unen_app",
- "unen_core",
- "unen_event",
 ]
 
 [[package]]
@@ -1833,14 +1819,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "unen_runner"
-version = "0.0.1"
-dependencies = [
- "signal-hook",
- "unen_event",
-]
-
-[[package]]
 name = "unen_window"
 version = "0.0.1"
 dependencies = [
@@ -1862,7 +1840,6 @@ dependencies = [
  "unen_app",
  "unen_event",
  "unen_logging",
- "unen_runner",
  "unen_window",
  "wasm-bindgen",
  "wasm-bindgen-futures",
