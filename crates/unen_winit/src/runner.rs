@@ -2,9 +2,13 @@ use std::sync::{atomic::Ordering, Arc};
 
 use raw_window_handle::{HasDisplayHandle, HasWindowHandle};
 use unen_app::prelude::{Runner, RunnerData, START, STEP, STOP};
+use unen_render::prelude::commands;
+use unen_window::prelude::SendableWindowHandle;
 use winit::{
     application::ApplicationHandler,
+    event::KeyEvent,
     event_loop::{ActiveEventLoop, EventLoop},
+    keyboard::{KeyCode, PhysicalKey},
     window::Window,
 };
 
@@ -38,15 +42,17 @@ impl Runner for WinitRunner {
             mut stages,
             mut state,
             term,
+            mut commands,
         } = data;
 
-        state = stages.get(START).execute_all(state);
+        state = stages.get(START).execute_all(state, &mut commands);
 
         // Reconstructs the data to be stored
         let data = RunnerData {
             stages,
             state,
             term,
+            commands,
         };
 
         self.data = Some(data);
@@ -71,24 +77,39 @@ impl ApplicationHandler<WinitState> for WinitRunner {
             window_attributes = window_attributes.with_canvas(Some(html_canvas_element));
         }
 
-        let _data = match &mut self.data {
+        let data = match self.data.take() {
             Some(data) => data,
             None => return,
         };
+
+        // Deconstruct the data to be used
+        let RunnerData {
+            stages,
+            state,
+            term,
+            mut commands,
+        } = data;
 
         let window = Arc::new(
             event_loop
                 .create_window(window_attributes)
                 .expect("Failed to create window"),
         );
-        let _raw_window_handle = window
+        let raw_window_handle = window
             .window_handle()
             .expect("Failed to get raw window handle")
             .as_raw();
-        let _raw_window_handle = window
+        let raw_display_handle = window
             .display_handle()
             .expect("Failed to get raw display handle")
             .as_raw();
+
+        let sendable_window_handle =
+            SendableWindowHandle::new(raw_window_handle, raw_display_handle);
+
+        commands.add(commands::Start {
+            sendable_window_handle,
+        });
 
         #[cfg(not(target_arch = "wasm32"))]
         {
@@ -106,6 +127,16 @@ impl ApplicationHandler<WinitState> for WinitRunner {
                 });
             }
         }
+
+        // Reconstructs the data to be stored
+        let data = RunnerData {
+            stages,
+            state,
+            term,
+            commands,
+        };
+
+        self.data = Some(data);
     }
 
     #[allow(unused_mut)]
@@ -138,16 +169,45 @@ impl ApplicationHandler<WinitState> for WinitRunner {
             mut stages,
             mut state,
             term,
+            mut commands,
         } = data;
 
         match event {
             winit::event::WindowEvent::CloseRequested => {
-                state = stages.get(STOP).execute_all(state);
+                state = stages.get(STOP).execute_all(state, &mut commands);
+
+                commands.add(commands::Stop);
+
                 term.store(true, Ordering::Relaxed);
                 event_loop.exit();
             }
+            winit::event::WindowEvent::Resized(size) => {
+                commands.add(commands::Resize {
+                    width: size.width,
+                    height: size.height,
+                });
+            }
             winit::event::WindowEvent::RedrawRequested => {
-                state = stages.get(STEP).execute_all(state);
+                commands.add(commands::Render);
+                state = stages.get(STEP).execute_all(state, &mut commands);
+            }
+            winit::event::WindowEvent::KeyboardInput {
+                event:
+                    KeyEvent {
+                        physical_key: PhysicalKey::Code(code),
+                        state: key_state,
+                        ..
+                    },
+                ..
+            } => {
+                if let (KeyCode::Escape, true) = (code, key_state.is_pressed()) {
+                    state = stages.get(STOP).execute_all(state, &mut commands);
+
+                    commands.add(commands::Stop);
+
+                    term.store(true, Ordering::Relaxed);
+                    event_loop.exit();
+                }
             }
             _ => {}
         }
@@ -157,6 +217,7 @@ impl ApplicationHandler<WinitState> for WinitRunner {
             stages,
             state,
             term,
+            commands,
         };
 
         self.data = Some(data);

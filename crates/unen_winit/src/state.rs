@@ -3,7 +3,8 @@ use std::sync::Arc;
 use winit::window::Window;
 
 pub struct WinitState {
-    window: Arc<Window>,
+    #[allow(dead_code)]
+    pub window: Arc<Window>,
 }
 
 impl WinitState {

@@ -1,6 +1,7 @@
 use std::sync::{atomic::AtomicBool, Arc};
 
 use crate::{
+    command::CommandRegistry,
     runner::{MininalRunner, Runner, RunnerData},
     stage::{Stage, StageContainer},
     system::System,
@@ -17,6 +18,7 @@ pub struct App {
     state: AppState,
     runner: Box<dyn Runner>,
     stages: StageContainer,
+    commands: CommandRegistry,
 }
 
 impl Default for App {
@@ -25,46 +27,37 @@ impl Default for App {
             runner: MininalRunner::new_boxed(),
             state: AppState,
             stages: StageContainer::default(),
+            commands: CommandRegistry::default(),
         }
     }
 }
 
 impl App {
     /// Starts the application, consumes `self`.
-    pub fn run(self) -> Self {
+    pub fn run(self) {
         let App {
             state,
             mut runner,
             stages,
+            commands,
         } = self;
 
         let term = Arc::new(AtomicBool::new(false));
 
-        let mut data = RunnerData {
+        let data = RunnerData {
             stages,
             state,
             term,
+            commands,
         };
 
-        data = runner.as_mut().run(data);
+        runner.as_mut().run(data);
 
         // Prints a newline to not mix logs with ctl echo
         println!();
 
         tracing::info!("Successfully terminated engine.");
         tracing::info!("See you later :D");
-
-        let RunnerData {
-            state,
-            stages,
-            term: _,
-        } = data;
-
-        Self {
-            state,
-            runner,
-            stages,
-        }
     }
 
     pub fn system<S: Stage, M: System>(&mut self, stage: S, system: M) -> &mut Self {

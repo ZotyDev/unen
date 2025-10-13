@@ -1,38 +1,74 @@
-use unen_event::prelude::{EventBox, EventHandler};
-use unen_window::prelude::WindowEvent;
-
 use crate::state::RendererState;
+use unen_app::prelude::{AppState, CommandRegistry, System};
 
 #[derive(Default)]
-pub struct RendererEventHandler {
+pub struct Renderer {
     state: Option<RendererState>,
 }
 
-impl EventHandler for RendererEventHandler {
-    fn handle(&mut self, event: &EventBox) -> bool {
-        if let Some(window_event) = event.downcast_ref::<WindowEvent>() {
-            match window_event {
-                WindowEvent::Created(handle) => {
-                    tracing::info!("Window created, initializing renderer...");
-                    self.state = Some(RendererState::new(handle));
-                }
-                WindowEvent::Resized { width, height } => {
-                    if let Some(state) = &mut self.state {
-                        state.resize(*width, *height);
-                    }
-                }
-                WindowEvent::Redraw => {
-                    if let Some(state) = &mut self.state {
-                        state.render();
-                    }
-                }
-                WindowEvent::Destroyed => {
-                    tracing::info!("Window destroyed, cleaning up renderer...");
-                    self.state = None;
-                }
+pub mod commands {
+    use unen_app::prelude::Command;
+    use unen_window::prelude::SendableWindowHandle;
+
+    use crate::state::RendererState;
+
+    use super::Renderer;
+
+    pub struct Start {
+        pub sendable_window_handle: SendableWindowHandle,
+    }
+
+    impl Command for Start {
+        type Target = Renderer;
+
+        fn apply(self: Box<Self>, target: &mut Self::Target) {
+            target.state = Some(RendererState::new(&self.sendable_window_handle));
+            tracing::info!("Successfully started Renderer.");
+        }
+    }
+
+    pub struct Stop;
+
+    impl Command for Stop {
+        type Target = Renderer;
+
+        fn apply(self: Box<Self>, target: &mut Self::Target) {
+            target.state = None;
+            tracing::info!("Successfully stopped Renderer.");
+        }
+    }
+
+    pub struct Resize {
+        pub width: u32,
+        pub height: u32,
+    }
+
+    impl Command for Resize {
+        type Target = Renderer;
+
+        fn apply(self: Box<Self>, target: &mut Self::Target) {
+            if let Some(state) = &mut target.state {
+                state.resize(self.width, self.height);
             }
         }
+    }
 
-        false
+    pub struct Render;
+
+    impl Command for Render {
+        type Target = Renderer;
+
+        fn apply(self: Box<Self>, target: &mut Self::Target) {
+            if let Some(state) = &mut target.state {
+                state.render();
+            }
+        }
+    }
+}
+
+impl System for Renderer {
+    fn execute(&mut self, state: AppState, commands: &mut CommandRegistry) -> AppState {
+        commands.apply_all(self);
+        state
     }
 }

@@ -11,6 +11,7 @@ unen_app = { path = "../unen_app" }
 unen_event = { path = "../unen_event" }
 unen_window = { path = "../unen_window" }
 unen_logging = { path = "../unen_logging", features = ["tracing"] }
+unen_render = { path = "../unen_render" }
 
 log = { workspace = true }
 

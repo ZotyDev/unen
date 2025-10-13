@@ -14,6 +14,7 @@ use signal_hook::{
 
 use crate::{
     app::AppState,
+    command::CommandRegistry,
     stage::{StageContainer, START, STEP, STOP},
 };
 
@@ -25,6 +26,7 @@ pub struct RunnerData {
     pub stages: StageContainer,
     pub state: AppState,
     pub term: Arc<AtomicBool>,
+    pub commands: CommandRegistry,
 }
 
 #[derive(Default)]
@@ -42,25 +44,27 @@ impl Runner for MininalRunner {
             mut stages,
             mut state,
             term,
+            mut commands,
         } = data;
 
-        state = stages.get(START).execute_all(state);
+        state = stages.get(START).execute_all(state, &mut commands);
 
         flag::register(SIGINT, Arc::clone(&term)).expect("Failed to register SIGINT flag.");
         flag::register(SIGTERM, Arc::clone(&term)).expect("Failed to register SIGTERM flag.");
 
         while !term.load(Ordering::Relaxed) {
-            state = stages.get(STEP).execute_all(state);
+            state = stages.get(STEP).execute_all(state, &mut commands);
 
             thread::sleep(Duration::from_millis(1));
         }
 
-        state = stages.get(STOP).execute_all(state);
+        state = stages.get(STOP).execute_all(state, &mut commands);
 
         RunnerData {
             stages,
             state,
             term,
+            commands,
         }
     }
 }

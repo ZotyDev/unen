@@ -1,9 +1,9 @@
-use unen_app::prelude::{AppState, System};
+use unen_app::prelude::{AppState, CommandRegistry, System};
 
 pub struct TracingLogger;
 
 impl System for TracingLogger {
-    fn execute(&mut self, state: AppState) -> AppState {
+    fn execute(&mut self, state: AppState, _commands: &mut CommandRegistry) -> AppState {
         tracing_subscriber::fmt()
             .with_max_level(tracing::Level::INFO)
             .with_target(false)
