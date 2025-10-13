@@ -12,4 +12,4 @@ default = []
 derive = ["unen_event_derive"]
 
 [dependencies]
-unen_event_derive = { path = "../unen_event_derive", optional = true }
+unen_event_derive = { version = "0.0.1", optional = true }

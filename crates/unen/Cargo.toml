@@ -1,5 +1,6 @@
 [package]
 name = "unen"
+description = "UnnamedEngine"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -7,11 +8,11 @@ repository.workspace = true
 keywords.workspace = true
 
 [dependencies]
-unen_app = { path = "../unen_app" }
-unen_event = { path = "../unen_event", features = ["derive"] }
-unen_logging = { path = "../unen_logging", features = ["tracing"] }
-unen_winit = { path = "../unen_winit" }
-unen_render = { path = "../unen_render" }
+unen_app = { version = "0.0.1" }
+unen_event = { version = "0.0.1", features = ["derive"] }
+unen_logging = { version = "0.0.1", features = ["tracing"] }
+unen_winit = { version = "0.0.1" }
+unen_render = { version = "0.0.1" }
 
 [[example]]
 name = "basic_app"

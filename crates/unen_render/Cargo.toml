@@ -8,9 +8,9 @@ repository.workspace = true
 keywords.workspace = true
 
 [dependencies]
-unen_app = { path = "../unen_app" }
-unen_event = { path = "../unen_event" }
-unen_window = { path = "../unen_window" }
+unen_app = { version = "0.0.1" }
+unen_event = { version = "0.0.1" }
+unen_window = { version = "0.0.1" }
 
 tracing = { workspace = true }
 
