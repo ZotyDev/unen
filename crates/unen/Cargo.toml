@@ -8,11 +8,11 @@ repository.workspace = true
 keywords.workspace = true
 
 [dependencies]
-unen_app = { version = "0.0.1" }
-unen_event = { version = "0.0.1", features = ["derive"] }
-unen_logging = { version = "0.0.1", features = ["tracing"] }
-unen_winit = { version = "0.0.1" }
-unen_render = { version = "0.0.1" }
+unen_app = { workspace = true }
+unen_event = { workspace = true, features = ["derive"] }
+unen_logging = { workspace = true, features = ["tracing"] }
+unen_winit = { workspace = true }
+unen_render = { workspace = true }
 
 [[example]]
 name = "basic_app"

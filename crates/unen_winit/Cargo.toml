@@ -8,12 +8,12 @@ repository.workspace = true
 keywords.workspace = true
 
 [dependencies]
-unen_app = { version = "0.0.1" }
-unen_window = { version = "0.0.1" }
-unen_logging = { version = "0.0.1", features = ["tracing"] }
-unen_render = { version = "0.0.1" }
+unen_app = { workspace = true }
+unen_window = { workspace = true }
+unen_logging = { workspace = true, features = ["tracing"] }
+unen_render = { workspace = true }
 
-log = { workspace = true }
+tracing = { workspace = true }
 
 pollster = { workspace = true }
 winit = { workspace = true }

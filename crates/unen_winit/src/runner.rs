@@ -7,7 +7,7 @@ use unen_window::prelude::SendableWindowHandle;
 use winit::{
     application::ApplicationHandler,
     event::KeyEvent,
-    event_loop::{ActiveEventLoop, EventLoop},
+    event_loop::{ActiveEventLoop, ControlFlow, EventLoop},
     keyboard::{KeyCode, PhysicalKey},
     window::Window,
 };
@@ -56,6 +56,7 @@ impl Runner for WinitRunner {
         };
 
         self.data = Some(data);
+        event_loop.set_control_flow(ControlFlow::Poll);
         event_loop.run_app(self).expect("Failed to run EventLoop");
 
         self.data.take().expect("Failed to return RunnerData.")
@@ -164,6 +165,11 @@ impl ApplicationHandler<WinitState> for WinitRunner {
             None => return,
         };
 
+        let winit_state = match self.state.take() {
+            Some(state) => state,
+            None => return,
+        };
+
         // Deconstruct the data to be used
         let RunnerData {
             mut stages,
@@ -188,6 +194,7 @@ impl ApplicationHandler<WinitState> for WinitRunner {
                 });
             }
             winit::event::WindowEvent::RedrawRequested => {
+                winit_state.window.request_redraw();
                 commands.add(commands::Render);
                 state = stages.get(STEP).execute_all(state, &mut commands);
             }
@@ -202,8 +209,8 @@ impl ApplicationHandler<WinitState> for WinitRunner {
             } => {
                 if let (KeyCode::Escape, true) = (code, key_state.is_pressed()) {
                     commands.add(commands::Stop);
-                    state = stages.get(STEP).execute_all(state, &mut commands);
                     state = stages.get(STOP).execute_all(state, &mut commands);
+                    state = stages.get(STEP).execute_all(state, &mut commands);
 
                     term.store(true, Ordering::Relaxed);
                     event_loop.exit();
@@ -221,5 +228,6 @@ impl ApplicationHandler<WinitState> for WinitRunner {
         };
 
         self.data = Some(data);
+        self.state = Some(winit_state);
     }
 }

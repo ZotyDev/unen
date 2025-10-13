@@ -1754,21 +1754,13 @@ checksum = "d2df906b07856748fa3f6e0ad0cbaa047052d4a7dd609e231c4f72cee8c36f31"
 
 [[package]]
 name = "unen"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
- "unen_app 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_event 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_logging 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_render 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_winit 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "unen_app"
-version = "0.0.1"
-dependencies = [
- "signal-hook",
- "tracing",
+ "unen_app 0.0.1",
+ "unen_event 0.0.1",
+ "unen_logging 0.0.1",
+ "unen_render 0.0.1",
+ "unen_winit 0.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -1782,10 +1774,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "unen_event"
-version = "0.0.1"
+name = "unen_app"
+version = "0.0.2"
 dependencies = [
- "unen_event_derive 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "signal-hook",
+ "tracing",
 ]
 
 [[package]]
@@ -1794,16 +1787,14 @@ version = "0.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "35240181dd15a06604051fa8d154ff22158e13a152d67dade0e00e7c124453e5"
 dependencies = [
- "unen_event_derive 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "unen_event_derive 0.0.1",
 ]
 
 [[package]]
-name = "unen_event_derive"
-version = "0.0.1"
+name = "unen_event"
+version = "0.0.2"
 dependencies = [
- "proc-macro2",
- "quote",
- "syn",
+ "unen_event_derive 0.0.1",
 ]
 
 [[package]]
@@ -1818,13 +1809,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "unen_logging"
-version = "0.0.1"
+name = "unen_event_derive"
+version = "0.0.2"
 dependencies = [
- "log",
- "tracing",
- "tracing-subscriber",
- "unen_app 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -1836,29 +1826,26 @@ dependencies = [
  "log",
  "tracing",
  "tracing-subscriber",
- "unen_app 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "unen_app 0.0.1",
+]
+
+[[package]]
+name = "unen_logging"
+version = "0.0.2"
+dependencies = [
+ "log",
+ "tracing",
+ "tracing-subscriber",
+ "unen_app 0.0.1",
 ]
 
 [[package]]
 name = "unen_net"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "bincode",
  "crc32fast",
  "thiserror 2.0.17",
-]
-
-[[package]]
-name = "unen_render"
-version = "0.0.1"
-dependencies = [
- "pollster",
- "raw-window-handle",
- "tracing",
- "unen_app 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_event 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_window 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "wgpu",
 ]
 
 [[package]]
@@ -1870,19 +1857,22 @@ dependencies = [
  "pollster",
  "raw-window-handle",
  "tracing",
- "unen_app 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_event 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_window 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "unen_app 0.0.1",
+ "unen_event 0.0.1",
+ "unen_window 0.0.1",
  "wgpu",
 ]
 
 [[package]]
-name = "unen_window"
-version = "0.0.1"
+name = "unen_render"
+version = "0.0.2"
 dependencies = [
- "log",
+ "pollster",
  "raw-window-handle",
- "unen_event 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "tracing",
+ "unen_app 0.0.1",
+ "unen_event 0.0.1",
+ "unen_window 0.0.1",
  "wgpu",
 ]
 
@@ -1894,23 +1884,33 @@ checksum = "02fbbdd1b1e25c9e558cf1bb0cbdcee165a47f2db4978ba91755515996d53035"
 dependencies = [
  "log",
  "raw-window-handle",
- "unen_event 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "unen_event 0.0.1",
+ "wgpu",
+]
+
+[[package]]
+name = "unen_window"
+version = "0.0.2"
+dependencies = [
+ "log",
+ "raw-window-handle",
+ "unen_event 0.0.1",
  "wgpu",
 ]
 
 [[package]]
 name = "unen_winit"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "console_error_panic_hook",
  "console_log",
- "log",
  "pollster",
  "raw-window-handle",
- "unen_app 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_logging 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_render 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_window 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "tracing",
+ "unen_app 0.0.1",
+ "unen_logging 0.0.1",
+ "unen_render 0.0.1",
+ "unen_window 0.0.1",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
@@ -1919,19 +1919,19 @@ dependencies = [
 
 [[package]]
 name = "unen_winit"
-version = "0.0.1"
+version = "0.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9b1a42612323e6b4597206d2d8d3b3258898e05611c463144124065fd8bfa7a0"
+checksum = "95c5b9c1011fd0f97244791e4a82ab29c861cb40eea8af63f903f61fdd844a3d"
 dependencies = [
  "console_error_panic_hook",
  "console_log",
- "log",
  "pollster",
  "raw-window-handle",
- "unen_app 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_logging 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_render 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "unen_window 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "tracing",
+ "unen_app 0.0.1",
+ "unen_logging 0.0.1",
+ "unen_render 0.0.1",
+ "unen_window 0.0.1",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",

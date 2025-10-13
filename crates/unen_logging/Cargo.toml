@@ -12,7 +12,7 @@ default = []
 tracing = ["tracing-subscriber"]
 
 [dependencies]
-unen_app = { version = "0.0.1" }
+unen_app = { workspace = true }
 
 log = { workspace = true }
 tracing = { workspace = true }

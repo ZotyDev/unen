@@ -8,7 +8,7 @@ repository.workspace = true
 keywords.workspace = true
 
 [dependencies]
-unen_event = { version = "0.0.1", features = ["derive"] }
+unen_event = { workspace = true, features = ["derive"] }
 
 log = { workspace = true }
 
