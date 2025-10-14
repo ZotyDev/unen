@@ -49,6 +49,7 @@ proc-macro2 = { version = "1.0.101" }
 # Algorithm
 bincode = { version = "2.0.1", features = ["serde"] }
 crc32fast = { version = "1.5.0" }
+bytemuck = { version = "1.24.0", features = ["derive"] }
 
 # Execution
 signal-hook = { version = "0.3.18" }
