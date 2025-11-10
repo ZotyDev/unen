@@ -42,9 +42,9 @@ tracing-subscriber = { version = "0.3.20" }
 thiserror = { version = "2.0.17" }
 
 # Derive Macros
-syn = { version = "2.0.106", features = ["full"] }
-quote = { version = "1.0.41" }
-proc-macro2 = { version = "1.0.101" }
+syn = { version = "2.0.110", features = ["full"] }
+quote = { version = "1.0.42" }
+proc-macro2 = { version = "1.0.103" }
 
 # Algorithm
 bincode = { version = "2.0.1", features = ["serde"] }
@@ -63,6 +63,6 @@ raw-window-handle = { version = "0.6.2" }
 # Web
 console_error_panic_hook = { version = "0.1.7" }
 console_log = { version = "1.0.0" }
-wasm-bindgen = { version = "0.2.104" }
-wasm-bindgen-futures = { version = "0.4.54" }
-web-sys = { version = "0.3", features = ["Document", "Window", "Element"] }
+wasm-bindgen = { version = "0.2.105" }
+wasm-bindgen-futures = { version = "0.4.55" }
+web-sys = { version = "0.3.82", features = ["Document", "Window", "Element"] }

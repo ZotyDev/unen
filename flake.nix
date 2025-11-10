@@ -1,51 +1,41 @@
 {
-  description = "A very basic flake";
-
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
-    self,
+    fenix,
     nixpkgs,
-    rust-overlay,
+    flake-utils,
+    ...
   }:
-  let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs {
-      inherit system;
-      overlays = [rust-overlay.overlays.default];
-    };
-    toolchain = pkgs.rust-bin.fromRustupToolchainFile ./toolchain.toml;
-
-    completeToolchain = toolchain.override {
-      extensions = [
-        "rust-src"
-        "rust-analyzer"
-        "clippy"
-        "rustfmt"
-      ];
-    };
-  in
-  {
-    devShells.${system}.default = pkgs.mkShell rec {
-      packages = [
-        completeToolchain
-      ];
-
-      RUST_SRC_PATH = "${completeToolchain}/lib/rustlib/src/rust/library";
-
+  flake-utils.lib.eachDefaultSystem (system:
+    let
+      pkgs = nixpkgs.legacyPackages.${system};
+      toolchain = fenix.packages.${system}.fromToolchainFile {
+        file = ./toolchain.toml;
+        sha256 = "sha256-2eWc3xVTKqg5wKSHGwt1XoM/kUBC6y3MWfKg74Zn+fY=";
+      };
       buildInputs = with pkgs; [
         pkg-config
         libxkbcommon
         vulkan-loader
         wayland
       ];
-
-      shellHook = ''
-        export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${builtins.toString (pkgs.lib.makeLibraryPath buildInputs)}"
-      '';
-    };
-  };
+    in {
+      devShells.default = pkgs.mkShell {
+        packages = [
+          toolchain
+        ] ++ buildInputs;
+        shellHook = ''
+          echo "rustc $(rustc --version)"
+          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${builtins.toString (pkgs.lib.makeLibraryPath buildInputs)}"
+        '';
+      };
+    });
 }
