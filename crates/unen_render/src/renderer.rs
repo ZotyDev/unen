@@ -82,7 +82,7 @@ pub mod commands {
                     g: self.g,
                     b: self.b,
                     a: self.a,
-                }
+                };
             }
         }
     }

@@ -35,7 +35,6 @@ fn main() {
     let mut app = create_app();
 
     app.runner(WinitRunner::default())
-        .runner(WinitRunner::default())
         .system(START, TracingLogger)
         .system(STEP, Renderer::default())
         .system(STEP, WindowApp::default());

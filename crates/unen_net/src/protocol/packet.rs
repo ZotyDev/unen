@@ -3,7 +3,7 @@ use crc32fast::Hasher;
 use thiserror::Error;
 
 pub const PACKET_MAX_SIZE: usize = 1200;
-pub const PROTOCOL_ID: &[u8; 8] = b"UEUDP001";
+pub const PROTOCOL_ID: [u8; 8] = *b"UEUDP001";
 pub const END_CHECK: u32 = 0xFFFFFFFF;
 
 #[derive(Debug, Error)]
@@ -36,7 +36,7 @@ impl Packet {
         }
 
         let mut crc_input = Vec::new();
-        crc_input.extend_from_slice(PROTOCOL_ID);
+        crc_input.extend_from_slice(&PROTOCOL_ID);
         crc_input.extend(&payload);
         crc_input.extend_from_slice(&END_CHECK.to_le_bytes());
 
@@ -66,7 +66,7 @@ impl Packet {
         }
 
         let mut crc_input = Vec::new();
-        crc_input.extend_from_slice(PROTOCOL_ID);
+        crc_input.extend_from_slice(&PROTOCOL_ID);
         crc_input.extend(payload);
         crc_input.extend_from_slice(&END_CHECK.to_le_bytes());
 

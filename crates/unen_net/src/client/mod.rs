@@ -20,7 +20,7 @@ pub enum Error {
     #[error("socket error: {0}")]
     SocketError(#[from] socket::Error),
     #[error("protocol error: {0}")]
-    ProtocolErro(#[from] protocol::Error),
+    ProtocolError(#[from] protocol::Error),
 }
 
 pub fn create_client() -> DisconnectedClient {
