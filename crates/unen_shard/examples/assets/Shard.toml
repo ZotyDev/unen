@@ -1,0 +1,28 @@
+[shard]
+name = "example_shard"
+namespace = "unen"
+description = "This shard is the official example on how to create shards"
+version = "0.0.1"
+edition = "v0"
+license = "MIT"
+repository = "https://github.com/UnnamedEngine/unen"
+issues = "https://github.com/UnnamedEngine/unen/issues"
+website = "unnamedengine.com/shards"
+keywords = ["unen"]
+
+[authors]
+zoty = { discord = "zotydev", email = "zotydev@gmail.com", url = "zoty.dev" }
+
+[relations.log]
+version = "*"
+from = "unen"
+
+[relations.another_example]
+version = "*"
+from = "unen"
+kind = "required"
+order = "before"
+
+[relations.yet_another_example]
+from = "unen"
+kind = "incompatible"

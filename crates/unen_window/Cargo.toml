@@ -10,7 +10,5 @@ keywords.workspace = true
 [dependencies]
 unen_event = { workspace = true, features = ["derive"] }
 
-log = { workspace = true }
-
 wgpu = { workspace = true }
 raw-window-handle = { workspace = true }

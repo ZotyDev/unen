@@ -1,18 +1,19 @@
 [package]
-name = "unen_logging"
-description = "Logging crate for UnnamedEngine"
+name = "unen_shard"
+description = "Shard crate for UnnamedEngine"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
 keywords.workspace = true
 
-[features]
-default = []
-tracing = ["tracing-subscriber"]
-
 [dependencies]
 unen_app = { workspace = true }
 
 tracing = { workspace = true }
-tracing-subscriber = { workspace = true, optional = true }
+
+serde = { workspace = true }
+toml = { workspace = true }
+semver = { workspace = true }
+url = { workspace = true }
+email_address = { workspace = true }

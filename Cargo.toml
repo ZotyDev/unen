@@ -7,13 +7,14 @@ members = [
   "crates/unen_logging",
   "crates/unen_net",
   "crates/unen_render",
+  "crates/unen_shard",
   "crates/unen_window",
   "crates/unen_winit",
 ]
 resolver = "2"
 
 [workspace.package]
-version = "0.0.3"
+version = "0.0.4"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/UnnamedEngine/unen"
@@ -23,18 +24,18 @@ keywords = ["unen"]
 strip = true
 
 [workspace.dependencies]
-unen = { path = "./crates/unen", version = "0.0.3" }
-unen_app = { path = "./crates/unen_app", version = "0.0.3" }
-unen_event = { path = "./crates/unen_event", version = "0.0.3" }
-unen_event_derive = { path = "./crates/unen_event_derive", version = "0.0.3" }
-unen_logging = { path = "./crates/unen_logging", version = "0.0.3" }
-unen_net = { path = "./crates/unen_net", version = "0.0.3" }
-unen_render = { path = "./crates/unen_render", version = "0.0.3" }
-unen_window = { path = "./crates/unen_window", version = "0.0.3" }
-unen_winit = { path = "./crates/unen_winit", version = "0.0.3" }
+unen = { path = "./crates/unen", version = "0.0.4" }
+unen_app = { path = "./crates/unen_app", version = "0.0.4" }
+unen_event = { path = "./crates/unen_event", version = "0.0.4" }
+unen_event_derive = { path = "./crates/unen_event_derive", version = "0.0.4" }
+unen_logging = { path = "./crates/unen_logging", version = "0.0.4" }
+unen_net = { path = "./crates/unen_net", version = "0.0.4" }
+unen_render = { path = "./crates/unen_render", version = "0.0.4" }
+unen_shard = { path = "./crates/unen_shard", version = "0.0.4" }
+unen_window = { path = "./crates/unen_window", version = "0.0.4" }
+unen_winit = { path = "./crates/unen_winit", version = "0.0.4" }
 
 # Logging
-log = { version = "0.4.28" }
 tracing = { version = "0.1.41", features = ["log"] }
 tracing-subscriber = { version = "0.3.20" }
 
@@ -66,3 +67,10 @@ console_log = { version = "1.0.0" }
 wasm-bindgen = { version = "0.2.105" }
 wasm-bindgen-futures = { version = "0.4.55" }
 web-sys = { version = "0.3.82", features = ["Document", "Window", "Element"] }
+
+# Serialization
+serde = { version = "1.0.228", features = ["derive"] }
+toml = { version = "0.9.8" }
+semver = { version = "1.0.27", features = ["serde"] }
+url = { version = "2.5.7" }
+email_address = { version = "0.2.9" }
