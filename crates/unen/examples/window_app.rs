@@ -10,7 +10,7 @@ impl System for WindowApp {
         self.hue = (self.hue + 0.005) % 360.0;
 
         let (r, g, b) = hsv_to_rgb(self.hue, 1.0, 1.0);
-        commands.add(commands::renderer_commands::SetClearColor { r, g, b, a: 1.0 });
+        commands.add(renderer_commands::SetClearColor { r, g, b, a: 1.0 });
 
         state
     }

@@ -2,7 +2,7 @@ use std::sync::{atomic::Ordering, Arc};
 
 use raw_window_handle::{HasDisplayHandle, HasWindowHandle};
 use unen_app::prelude::{Runner, RunnerData, START, STEP, STOP};
-use unen_render::prelude::commands;
+use unen_render::prelude::renderer_commands;
 use unen_window::prelude::SendableWindowHandle;
 use winit::{
     application::ApplicationHandler,
@@ -108,7 +108,7 @@ impl ApplicationHandler<WinitState> for WinitRunner {
         let sendable_window_handle =
             SendableWindowHandle::new(raw_window_handle, raw_display_handle);
 
-        commands.add(commands::Start {
+        commands.add(renderer_commands::Start {
             sendable_window_handle,
         });
 
@@ -180,7 +180,7 @@ impl ApplicationHandler<WinitState> for WinitRunner {
 
         match event {
             winit::event::WindowEvent::CloseRequested => {
-                commands.add(commands::Stop);
+                commands.add(renderer_commands::Stop);
                 state = stages.get(STEP).execute_all(state, &mut commands);
                 state = stages.get(STOP).execute_all(state, &mut commands);
 
@@ -188,14 +188,14 @@ impl ApplicationHandler<WinitState> for WinitRunner {
                 event_loop.exit();
             }
             winit::event::WindowEvent::Resized(size) => {
-                commands.add(commands::Resize {
+                commands.add(renderer_commands::Resize {
                     width: size.width,
                     height: size.height,
                 });
             }
             winit::event::WindowEvent::RedrawRequested => {
                 winit_state.window.request_redraw();
-                commands.add(commands::Render);
+                commands.add(renderer_commands::Render);
                 state = stages.get(STEP).execute_all(state, &mut commands);
             }
             winit::event::WindowEvent::KeyboardInput {
@@ -208,7 +208,7 @@ impl ApplicationHandler<WinitState> for WinitRunner {
                 ..
             } => {
                 if let (KeyCode::Escape, true) = (code, key_state.is_pressed()) {
-                    commands.add(commands::Stop);
+                    commands.add(renderer_commands::Stop);
                     state = stages.get(STOP).execute_all(state, &mut commands);
                     state = stages.get(STEP).execute_all(state, &mut commands);
 

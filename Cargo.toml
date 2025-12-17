@@ -4,10 +4,13 @@ members = [
   "crates/unen_app",
   "crates/unen_event",
   "crates/unen_event_derive",
+  "crates/unen_gpu",
   "crates/unen_logging",
   "crates/unen_net",
   "crates/unen_render",
+  "crates/unen_resource",
   "crates/unen_shard",
+  "crates/unen_texture",
   "crates/unen_window",
   "crates/unen_winit",
 ]
@@ -28,10 +31,13 @@ unen = { path = "./crates/unen", version = "0.0.4" }
 unen_app = { path = "./crates/unen_app", version = "0.0.4" }
 unen_event = { path = "./crates/unen_event", version = "0.0.4" }
 unen_event_derive = { path = "./crates/unen_event_derive", version = "0.0.4" }
+unen_gpu = { path = "./crates/unen_gpu", version = "0.0.4" }
 unen_logging = { path = "./crates/unen_logging", version = "0.0.4" }
 unen_net = { path = "./crates/unen_net", version = "0.0.4" }
 unen_render = { path = "./crates/unen_render", version = "0.0.4" }
+unen_resource = { path = "./crates/unen_resource", version = "0.0.4" }
 unen_shard = { path = "./crates/unen_shard", version = "0.0.4" }
+unen_texture = { path = "./crates/unen_texture", version = "0.0.4" }
 unen_window = { path = "./crates/unen_window", version = "0.0.4" }
 unen_winit = { path = "./crates/unen_winit", version = "0.0.4" }
 
@@ -74,3 +80,9 @@ toml = { version = "0.9.8" }
 semver = { version = "1.0.27", features = ["serde"] }
 url = { version = "2.5.7" }
 email_address = { version = "0.2.9" }
+
+# Assets
+image = { version = "0.25.9", default-features = false, features = [
+  "png",
+  "jpeg",
+] }

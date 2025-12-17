@@ -11,7 +11,9 @@ keywords.workspace = true
 unen_app = { workspace = true }
 unen_event = { workspace = true, features = ["derive"] }
 unen_logging = { workspace = true, features = ["tracing"] }
+unen_resource = { workspace = true }
 unen_shard = { workspace = true }
+unen_texture = { workspace = true }
 unen_winit = { workspace = true }
 unen_render = { workspace = true }
 
